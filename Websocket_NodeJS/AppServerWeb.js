@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 let coordonnees = '';
 
 io.on('connection', (socket) => {
-console.log('Un client est connecté')
+
     // l’application capteurs doit se connecter en premier ensuite l’application web
     socket.on('client', (data) => {
         
@@ -39,7 +39,6 @@ console.log('Un client est connecté')
     }
 
     socket.on('mesures', (data) => {
-        console.log(`mesures reçues du programme de lecture des capteurs`);
         // Mettre ton code ici
 
         //Socket.io est à l'écoute d'un objet {texte, donnees}, il est ici pré-supposé quel'envoyeur devra utilisera les valeurs ax, ay etc..
@@ -59,7 +58,6 @@ console.log('Un client est connecté')
             temp: `${data.temp}`
         };
 
-        console.log(this.coordonnees);
         //On envoie le texte qui comprends les trois coordonnees vers le code responsable de l'affichage de la page
         
         // socket.emit('mesures', this.coordonees);
@@ -68,13 +66,7 @@ console.log('Un client est connecté')
         io.emit('captation', this.coordonnees);
 
     });
-    socket.on('ledButton', function (data) {
-        // refaire ici en utilisant le même pricnipe pour gestion evenementielle à la suite de l'appui sur le bouton
-       
-    });
-    socket.on('disconnect', ()=>{
-        console.log('Bye')
-    })
+   
     
 });
 http.listen(port, () => {
